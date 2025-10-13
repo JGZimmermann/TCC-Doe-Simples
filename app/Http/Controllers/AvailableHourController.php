@@ -14,6 +14,11 @@ class AvailableHourController extends Controller
     {
     }
 
+    public function availableHourById($id)
+    {
+        return response()->json($this->availableHourService->getAvailableHourById($id));
+    }
+
     public function show($day)
     {
         return response()->json($this->availableHourService->showAllAvailableHours($day));
@@ -43,9 +48,5 @@ class AvailableHourController extends Controller
     public function turnHourAvailable($id)
     {
         return response()->json($this->availableHourService->turnHourAvailable($id));
-    }
-
-    public function storeAmountOfHoursByEmployee(StoreAvailableHourRequest $request){
-        return response()->json($this->availableHourService->storeAmountOfHoursByEmployee($request));
     }
 }

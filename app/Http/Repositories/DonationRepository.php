@@ -30,6 +30,16 @@ class DonationRepository{
         return $donation->update($data);
     }
 
+    public function rejectDonation(Donation $donation)
+    {
+        return $donation->update(['status' => 'rejected']);
+    }
+
+    public function acceptDonation(Donation $donation)
+    {
+        return $donation->update(['status' => 'accepted']);
+    }
+
     public function storeDonationWithoutLogin($data)
     {
         return Donation::create([

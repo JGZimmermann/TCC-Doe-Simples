@@ -40,6 +40,20 @@ class DonationService
         return $this->donationRepository->updateDonation($donation, $data);
     }
 
+    public function rejectDonation($id)
+    {
+        $donation = $this->getDonationById($id);
+        $hour = $this->availableHourRepository->getAvailableHourById($donation->hour_id);
+        $hour->update(['availability' => 1]);
+        return $this->donationRepository->rejectDonation($donation);
+    }
+
+    public function acceptDonation($id)
+    {
+        $donation = $this->getDonationById($id);
+        return $this->donationRepository->acceptDonation($donation);
+    }
+
     public function create()
     {
         return view('donations.create');

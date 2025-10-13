@@ -1,9 +1,10 @@
 FROM php:8.3-fpm
 
-ARG user=codeacademy
+ARG user=doesimples
 ARG uid=1000
 
 RUN apt-get update && apt-get install -y \
+    nginx \
     git \
     curl \
     libpng-dev \
@@ -28,6 +29,23 @@ RUN pecl install -o -f redis \
 
 WORKDIR /var/www
 
-COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+
+COPY . .
+
 
 USER $user
+RUN composer install --no-dev --optimize-autoloader
+
+USER root
+
+COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+
+
+COPY nginx.conf /etc/nginx/sites-available/default
+
+
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+
+CMD ["/start.sh"]

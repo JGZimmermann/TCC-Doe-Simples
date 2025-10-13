@@ -27,11 +27,15 @@ Route::middleware(['check.user.admin'])->group(function () {
 });
 
 Route::middleware(['check.users.admin.attendant'])->group(function () {
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::get('/hours', [AvailableHourController::class, 'create'])->name('register.hour.form');
     Route::post('/hours', [AvailableHourController::class, 'store'])->name('register.hour.store');
+    Route::get('/hours/{id}', [AvailableHourController::class, 'availableHourById'])->name('return.hour.id');
     Route::get('/availableHours', [AvailableHourController::class, 'show'])->name('register.hour.index');
     Route::get('/donations', [DonationController::class, 'index'])->name('donation.index');
     Route::get('/donations/all', [DonationController::class, 'allDonations'])->name('donation.all');
     Route::get('/donations/pending', [DonationController::class, 'pendingDonations'])->name('donation.pending');
     Route::get('/donations/accepted', [DonationController::class, 'acceptedDonations'])->name('donation.accepted');
+    Route::get('/donations/{id}/accept', [DonationController::class, 'acceptDonation'])->name('return.hour.accept');
+    Route::get('/donations/{id}/reject', [DonationController::class, 'rejectDonation'])->name('return.hour.reject');
 });

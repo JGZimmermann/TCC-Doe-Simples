@@ -23,6 +23,11 @@ class UserController extends Controller
         return view('users.create');
     }
 
+    public function show($id)
+    {
+        return response()->json($this->userService->getUserById($id));
+    }
+
     public function registerDonor(StoreDonorRequest $request)
     {
         $user = $this->userService->storeDonor($request->validated());

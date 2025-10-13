@@ -34,6 +34,18 @@ class DonationController extends Controller
         return response()->json($this->donationService->getAllPendingDonations());
     }
 
+    public function rejectDonation($id)
+    {
+        $this->donationService->rejectDonation($id);
+        return redirect()->route('donation.index')->with('error', 'Doação rejeitada!');
+    }
+
+    public function acceptDonation($id)
+    {
+        $this->donationService->acceptDonation($id);
+        return redirect()->route('donation.index')->with('success', 'Doação confirmada!');
+    }
+
     public function create()
     {
         return $this->donationService->create();

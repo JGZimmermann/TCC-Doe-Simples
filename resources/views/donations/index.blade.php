@@ -5,7 +5,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            {{-- A sidebar de navegação que você já tinha --}}
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
@@ -34,8 +33,21 @@
                 </div>
 
                 <div class="mb-3">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                     <label for="status-filter" class="form-label fw-bold">Filtrar por status:</label>
                     <select class="form-select" id="status-filter" style="max-width: 250px;">
+                        <option value="all">Todas</option>
                         <option value="pending" selected>Pendentes</option>
                         <option value="accepted">Aceitas</option>
                     </select>
@@ -46,7 +58,6 @@
             </main>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const statusFilter = document.getElementById('status-filter');
@@ -55,7 +66,7 @@
             async function fetchDonations(status) {
                 donationsContainer.innerHTML = '<p class="text-center col-12">Carregando agendamentos...</p>';
 
-                const baseUrl = '/donations/pending';
+                const baseUrl = `/donations/${status}`;
                 const url = `${baseUrl}`;
 
                 try {
@@ -70,26 +81,50 @@
                     donationsContainer.innerHTML = '';
 
                     if (!data || data.length === 0) {
-                        donationsContainer.innerHTML = `<p class="text-center col-12">Nenhum agendamento encontrado com o status "${status}".</p>`;
+                        donationsContainer.innerHTML = `<p class="text-center col-12">Nenhum agendamento encontrado com o status selecionado.</p>`;
                         return;
                     }
 
                     data.forEach(donation => {
-                        const cardHtml = `
-                            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Agendamento #${donation.id}</h5>
-                                        <p class="card-text"><strong>Doador:</strong> ${donation.donor_name || 'Não informado'}</p>
-                                        <p class="card-text">
-                                            <strong>Data:</strong> ${new Date(donation.scheduled_at).toLocaleString('pt-BR')}
-                                        </p>
-                        <a href="/donations/${donation.id}" class="btn btn-primary mt-2">Ver Detalhes</a>
+                        fetch(`/users/${donation.donor_id}`)
+                            .then(response => response.json())
+                            .then(user => {
+                                fetch(`/hours/${donation.hour_id}`)
+                                    .then(response => response.json())
+                                    .then(hour => {
+                                        let cardHtml = `
+                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                                        <div class="card shadow-sm">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${user.name}</h5>
+                                                <p class="card-text">
+                                                    <strong>Data:</strong> ${hour.day.split("-")[2]}/${hour.day.split("-")[1]}/${hour.day.split("-")[0]} ${hour.start_time.split(":")[0]}:${hour.start_time.split(":")[1]}
+                                                </p>
+                                                <p class="card-text">
+                                                    <strong>Status:</strong> ${donation.status.replace("pending","Pendente").replace("accepted","Aceita").replace("rejected","Rejeitada")}
+                                                </p>
+                                               `;
+                                        if(status == "pending"){
+                                            cardHtml += `
+                                                <div class="d-flex gap-2 mt-2">
+                                            <a href="/donations/${donation.id}/accept" class="btn btn-success flex-fill">
+                                                Confirmar agendamento
+                                            </a>
+                                            <a href="/donations/${donation.id}/reject" class="btn btn-danger flex-fill">
+                                                Cancelar agendamento
+                                            </a>
+                                        </div>
+                                            `
+                                        }
+                                            cardHtml += `
+                                                </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        `;
-                        donationsContainer.insertAdjacentHTML('beforeend', cardHtml);
+                                            `
+                                        donationsContainer.insertAdjacentHTML('beforeend', cardHtml);
+                                    })
+                            })
+
                     });
 
                 } catch (error) {
