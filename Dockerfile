@@ -39,8 +39,4 @@ USER $user
 
 RUN git config --global --add safe.directory /var/www && \
     mkdir -p /.composer/cache && chmod -R 777 /.composer
-
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-CMD ["/start.sh"]
     
