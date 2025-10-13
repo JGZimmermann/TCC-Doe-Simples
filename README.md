@@ -66,10 +66,4 @@ docker compose up -d
   ```bash
   docker compose exec --users 1000:1000 app sh
   ```
-
-## Dicas para Usuários Windows
-
-- Não use no Windows, php não gosta de Windows.
-- Se for utilizar, recomendo o uso do [Laragon](https://laragon.org/). Nos quatro primeiros vídeos desta [playlist](https://www.youtube.com/playlist?list=PLwXQLZ3FdTVH5Tb57_-ll_r0VhNz9RrXb) há um tutorial de como configurá-lo. Existem também outras opções, como o [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10), porém o WSL tem um certo delay.
-
----
+  
