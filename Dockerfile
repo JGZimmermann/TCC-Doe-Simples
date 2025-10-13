@@ -32,6 +32,7 @@ WORKDIR /var/www
 
 COPY . .
 
+RUN chown -R $user:$user /var/www
 
 USER $user
 RUN composer install --no-dev --optimize-autoloader
