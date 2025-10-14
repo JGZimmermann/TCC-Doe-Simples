@@ -47,14 +47,16 @@ class AvailableHourService
             $targetDate = Carbon::now()->next($carbonDayMap[$dayNumber]);
 
             foreach ($timesSelected as $time) {
+                $timeIterator = Carbon::parse($time);
                 for ($i = 0; $i < 4; $i++) {
 
                     $hourData = [
                         'employee_id' => $employeeId,
                         'date'        => $targetDate->toDateString(),
-                        'time'        => $time,
+                        'time'        => $timeIterator->format('H:i'),
                     ];
                     $this->availableHourRepository->storeAvailableHour($hourData);
+                    $timeIterator->addMinutes(15);
                 }
             }
         }
