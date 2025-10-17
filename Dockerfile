@@ -30,6 +30,11 @@ RUN pecl install -o -f redis && \
 
 WORKDIR /var/www
 
+RUN chown -R $user:www-data /var/www/storage /var/www/bootstrap/cache || true
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache || true
+
+USER $user
+
 RUN chown -R $user:www-data /var/www && \
     chmod -R 775 /var/www
 
