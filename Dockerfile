@@ -35,9 +35,6 @@ RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache || true
 
 USER $user
 
-RUN chown -R $user:www-data /var/www && \
-    chmod -R 775 /var/www
-
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 USER $user
