@@ -100,6 +100,9 @@
                                                 <p class="card-text">
                                                     <strong>Data:</strong> ${hour.day.split("-")[2]}/${hour.day.split("-")[1]}/${hour.day.split("-")[0]} ${hour.start_time.split(":")[0]}:${hour.start_time.split(":")[1]}
                                                 </p>
+						<p class="card-text">
+						    <strong>Telefone:</strong> ${ (user.information && user.information.length > 0) ? user.information[0].phone_number : "" }
+						</p>
                                                 <p class="card-text">
                                                     <strong>Status:</strong> ${donation.status.replace("pending","Pendente").replace("accepted","Aceita").replace("rejected","Rejeitada")}
                                                 </p>

@@ -48,7 +48,7 @@
                     @csrf
 
                     <div class="mb-4">
-                        <h3>1. Selecione o Atendente</h3>
+                        <h3>1. Selecione o Clínico</h3>
                         <div class="d-flex flex-wrap gap-3">
                             @forelse ($employees as $employee)
                                 <div class="card" style="width: 12rem;">

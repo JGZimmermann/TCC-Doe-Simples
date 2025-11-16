@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository{
     public function getUserById($id)
     {
-        return User::findOrFail($id);
+        return User::with('information')->find($id);
     }
 
     public function updateUser(User $user, $data)

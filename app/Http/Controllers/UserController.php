@@ -59,7 +59,7 @@ class UserController extends Controller
         $login = $this->userService->login($request->validated());
         if($login){
             $request->session()->regenerate();
-            return redirect()->route('home')->with('success', 'Sua conta foi criada com sucesso!');
+            return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
         }
         return back()->withErrors([
             'cpf' => 'O CPF ou senha estão incorretos.',
@@ -68,10 +68,9 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        $this->userService->logoutUser();
+        Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->flush();
 
         return redirect()->route('home')->with('success', 'Você saiu da sua conta!');
     }

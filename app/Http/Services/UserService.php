@@ -30,7 +30,7 @@ class UserService
 
     public function updateUser($data)
     {
-        $id = Auth::id();
+	$id = Auth::guard('web')->id();
         $user = $this->getUserById($id);
         if(isset($data['password'])){
             $data = $this->hashPassword($data);

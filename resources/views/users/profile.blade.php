@@ -8,6 +8,17 @@
             <h2>Meu Perfil</h2>
         </div>
 
+	@if ($errors->any())
+            <div class="alert-danger">
+                <strong>Opa!</strong> Algo deu errado.
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('profile.update') }}" method="POST">
             @csrf
             @method('PUT')
@@ -28,7 +39,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="password" class="form-label">Senha</label>
-                            <input type="text" class="form-control" id="password" name="password" value="{{ old('password', $user->password) }}" required>
+                            <input type="password" class="form-control" id="password" name="password" value="{{ old('password', $user->password) }}" required>
                         </div>
                     </div>
                     <div class="row">

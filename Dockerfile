@@ -40,5 +40,5 @@ COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 USER $user
 
 RUN git config --global --add safe.directory /var/www && \
-    mkdir -p /.composer/cache && chmod -R 777 /.composer
-    
+    mkdir -p /home/$user/.composer/cache && chmod -R 777 /home/$user/.composer
+

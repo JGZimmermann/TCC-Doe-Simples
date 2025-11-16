@@ -74,9 +74,16 @@
     @yield('content')
 </main>
 
-<footer class="position-absolute bottom-0 start-50 translate-middle-x container text-center mt-5">
-    <p>&copy; 2025 Doe Simples</p>
+<footer class="footer text-white py-2" style="background-color: #d63e49; position: fixed; bottom: 0; width: 100%; font-size: 0.9rem;">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+        <span>© 2025 Doe Simples</span>
+        <span>Hemocentro de Guarapuava — R. Afonso Botelho, 134 - Trianon</span>
+        <span>Atendimento: Seg a Sex, 8h às 17h | (42) 98878-6311</span>
+    </div>
 </footer>
+
+<div style="height:60px;"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

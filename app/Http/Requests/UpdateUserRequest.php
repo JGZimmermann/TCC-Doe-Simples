@@ -29,7 +29,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'sometimes|string|email|max:255',
             'password' => 'sometimes|min:8',
             'blood_type' => ['sometimes', Rule::in(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'N/A'])],
-            'cpf' => 'sometimes|string|unique:users,cpf|regex:/^\d{11}$/',
+            'cpf' => 'sometimes|string|regex:/^\d{11}$/',
             'birth_date' => 'sometimes|date_format:Y-m-d|before_or_equal:today',
             'address' => 'sometimes|string|min:10|max:255',
             'number' => 'sometimes|string|regex:/^[0-9]{10,11}$/',
